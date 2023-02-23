@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Color</th>
+            <th>Config</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Details</th>
+        </tr>
+
+        {% for prod in products %}
+        <tr class="active-row">
+            <td>{{ prod.nameProd }}</td>
+            <td>{{ prod.category }}</td>
+            <td>
+                <ul>
+                {% for c in prod.color %}
+                    <li>{{ c.name }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>
+              <ul>
+              {% for conf in prod.configProd %}
+                  <li>{{ conf.name }}</li>
+              {% endfor %}
+              </ul>
+          </td>
+          <td>{{ prod.price }}</td>
+          <td><a href="{{ url_for('main.product', product_id=prod.id)}}" class="button is-primary is-outlined">Show</a></td>
+          <td><a href="{{ url_for('admin.edit', id=prod.id)}}" class="button is-warning  is-outlined">Edit</a></td>
+          <td><a href="{{ url_for('admin.delete', id=prod.id)}}" class="button is-danger is-outlined">Delete</a></td>
+        </tr>
+        {% endfor %}
+
+    </table>
+  </section>
+
+
+   
+
+  
+  
+{% endblock %}

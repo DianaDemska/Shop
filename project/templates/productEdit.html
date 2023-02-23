@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Edit product</h3>
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="notification is-danger">
+        {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        
+        <form method="POST" enctype="multipart/form-data" action="/admin/edit/{{product.id}}">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="nameProd" placeholder="{{product.nameProd}}" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="description" placeholder="{{product.description}}">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="number" name="price" placeholder="{{product.price}}">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="select is-info">
+                    <select class="is-focused" id="category" name="category">
+                        <option value="Headphones">Headphones</option>
+                        <option value="Smartphones">Smartphones</option>
+                        <option value="Consoles">Consoles</option>
+                      </select>
+                </div>
+            </div>
+            {% for c in product.configProd %}
+            <div class="field">
+                <label class="checkbox">
+                    <input type="checkbox" name="conf" value="{{c.name}}">
+                    {{ c.name }}
+                </label>
+            </div>
+            {% endfor %}
+            {% for i in range(0, 3) %}
+            <input type="file" name="picture{{i}}" />
+            <!-- <div class="file is-warning is-boxed is-centered">
+                <label class="file-label">
+                  <input class="file-input" type="file" name="picture{{i}}">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-cloud-upload-alt"></i>
+                    </span>
+                    <span class="file-label">
+                      Select image…
+                    </span>
+                  </span>
+                </label>
+            </div> -->
+
+                <div class="select is-info">
+                    <select class="is-focused" name="color{{i}}">
+                        <option value="black">Black</option>
+                        <option value="blue">Blue</option>
+                        <option value="red">Red</option>
+                    </select>
+                </div>
+
+            {% endfor %}
+            <input type="submit" class="button is-block is-info is-large is-fullwidth"></input>
+        </form>
+    </div>
+</div>
+{% endblock %}

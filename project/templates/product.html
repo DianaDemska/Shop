@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container">
+
+    <!-- Left Column / Headphones Image -->
+    <div class="left-column">
+      {% for im in image %}
+      {% for col in im.color %}
+      
+      <img data-image="{{ col.name }}" class="active" style="width:900px;height:900px;" src="{{ url_for('main.display_image', filename=im.img)}}" alt="">
+      {% endfor %}
+      {% endfor %}
+    </div>
+
+
+    <!-- Right Column -->
+    <div class="right-column">
+
+      <!-- Product Description -->
+      <div class="product-description">
+        <span>{{ product.category }}</span>
+        <h1>{{ product.nameProd }}</h1>
+        <p>{{ product.description }}</p>
+      </div>
+
+      <!-- Product Configuration -->
+      <div class="product-configuration">
+
+        <!-- Product Color -->
+        <div class="product-color">
+          <span>Color</span>
+
+          <div class="color-choose">
+            {% for col in product.color %}
+            <div>
+              <input data-image="{{ col.name }}" type="radio" id="{{ col.name }}" name="color" value="{{ col.name }}" checked>
+              <label for="{{ col.name }}"><span></span></label>
+            </div>
+            {% endfor %}
+          </div>
+
+        </div>
+
+        <!-- Cable Configuration -->
+        <div class="cable-config">
+          <span>Cable configuration</span>
+
+          <div class="cable-choose">
+            {% for con in product.configProd %}
+            <button>{{ con.name }}</button>
+            {% endfor %}
+          </div>
+
+          <a href="#">How to configurate your headphones</a>
+        </div>
+      </div>
+
+      <!-- Product Pricing -->
+      <div class="product-price">
+        <span>{{ product.price }}$</span>
+        <a href="#" class="cart-btn">Add to cart</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
+  <script src="{{url_for('static', filename='script.js')}}" charset="utf-8"></script>
+  {% endblock %}

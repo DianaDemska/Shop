@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<form class="choice" method="post" action="/">
+    {% if button == 1 %}
+    <button class="button is-link is-rounded is-pulled-right" name="submit_button" value="Table">Table</button>
+    {% else %}
+    <button class="button is-info is-rounded is-pulled-right" name="submit_button" value="Grid">Grid</button>
+    {% endif %}
+</form>
+{% if button == 1 %} 
+<section>
+    
+  <div class="row">
+
+      <div class="col-md-4">
+        {% for i in range(0, 4) %}
+        {% for product in products %}
+          <div class="product-item">
+              <div class="product-img">
+                    <a href="{{ url_for('main.product', product_id=product.id)}}">
+                        <img style="width:210px;height:300px;"  src="{{ url_for('main.display_image', filename=product.img_prev)}}" >
+                    </a>
+              </div>
+              <div class="product-list">
+                    <h3>{{ product.nameProd }}</h3>
+                    <div class="stars"></div>
+                    <span class="price">{{ product.price }}</span>
+                    <div class="actions">
+                        <div class="add-to-cart">
+                            <a href="{{ url_for('main.product', product_id=product.id)}}" class="button is-danger is-outlined">Show details</a>
+                        </div>
+                    </div>
+              </div>
+          </div>
+
+          <div class="product-item">
+              <div class="product-img">
+                    <a href="">
+                        <img src="http://dummyimage.com/200x300">
+                    </a>
+              </div>
+              <div class="product-list">
+                    <h3>Product Name</h3>
+                    <div class="stars"></div>
+                    <span class="price">100$</span>
+                    <div class="actions">
+                        <div class="add-to-cart">
+                            <a href="" class="button is-danger is-outlined">Show details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          {% endfor %}
+          {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+
+{% else %}
+<section>
+      <table class="table">
+          <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Color</th>
+              <th>Config</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Details</th>
+          </tr>
+          {% for i in range(0, 4) %}
+          {% for prod in products %}
+          <tr class="active-row">
+              <td>{{ prod.nameProd }}</td>
+              <td>{{ prod.category }}</td>
+              <td>
+                  <ul>
+                  {% for c in prod.color %}
+                      <li>{{ c.name }}</li>
+                  {% endfor %}
+                  </ul>
+              </td>
+              <td>
+                <ul>
+                {% for conf in prod.configProd %}
+                    <li>{{ conf.name }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>{{ prod.description }}</td>
+            <td>{{ prod.price }}</td>
+            <td><a href="{{ url_for('main.product', product_id=prod.id)}}" class="button is-danger is-outlined">Show details</a></td>
+          </tr>
+          {% endfor %}
+          {% endfor %}
+      </table>
+    </section>
+    {% endif %}
+
+
+     
+
+    
+    
+{% endblock %}
